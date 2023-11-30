@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Register - GlucoMonitor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0;
+        }
+
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Existing User - GlucoMonitor</h2>
+
+        <form id="userForm" action="/existing_user/checkID" method="post">
+            <label for="ssn">ID:</label>
+            <input type="text" id="ssn" name="ssn" required>
+            
+            <button type="submit">Submit</button>
+            <p id="msg"></p>
+
+            <iframe id="extraFieldsIframe" src="/extraFields" style="display:none; width: 100%; height: 150px; border: none;"></iframe>
+
+        </form>
+
+        <div id="userDetails" style="display: none;">
+            <h3>Welcome, <span id="userName"></span></h3>
+            <canvas id="sugarChart" width="400" height="200"></canvas>
+        </div>
+    </div>
+    
+    <!-- Adding JavaScript to toggle the visibility of extra fields -->
+    <script>
+        let myChart = null;
+        document.getElementById("userForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevents the default form submission
+            
+            const ssnValue = document.getElementById("ssn").value;
+    
+            // Use fetch to make an asynchronous POST request to the server
+            fetch("/existing_user/checkID", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ ssn: ssnValue })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.name) {
+                    // If a name was returned, the ID is valid
+                    document.getElementById("extraFieldsIframe").style.display = "block";
+                    document.getElementById("userName").textContent = data.name;
+    
+                    // Fetch patient data and then draw the chart
+                    fetch("/get-patient-data", {
+                        method: "POST",
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ ssn: ssnValue })
+                    })
+                    .then(response => response.json())
+                    .then(patientData => {
+                        const dates = patientData.logs.map(log => log.date);
+                        const sugarLevels = patientData.logs.map(log => log.sugarLevelAfterTwoHours);
+    
+                        const ctx = document.getElementById('sugarChart').getContext('2d');
+                        if (myChart) {
+                            myChart.destroy();
+                        }
+                        myChart = new Chart(ctx, {
+                            type: 'line',
+                            data: {
+                                labels: dates,
+                                datasets: [{
+                                    label: 'Sugar Level After Two Hours',
+                                    data: sugarLevels,
+                                    borderColor: 'rgb(75, 192, 192)',
+                                    tension: 0.1
+                                }]
+                            },
+                            options: {}
+                        });
+                        document.getElementById("userDetails").style.display = "block";
+                    });
+                } else {
+                    // Otherwise, show an error message
+                    document.getElementById("msg").textContent = "User does not exist";
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                document.getElementById("msg").textContent = "An error occurred. Please try again.";
+            });
+        });
+    </script>    
+</body>
+</html>

@@ -1,0 +1,40 @@
+{
+    "patients": [
+      {
+        "id": "1",
+        "firstName": "John",
+        "lastName": "Doe",
+        "dob": "1990-01-01",
+        "profilePic": "C:/CloudComputingFinalProject/mocData/images/profilePic1.jpg",
+        "initialSugarLevel": 90,
+        "logs": [
+          {"date": "2023-09-01", "food": "Sandwich", "sugarLevelAfterTwoHours": 110},
+          {"date": "2023-09-02", "food": "Pasta", "sugarLevelAfterTwoHours": 120},
+          {"date": "2023-09-03", "food": "Salad", "sugarLevelAfterTwoHours": 95},
+          {"date": "2023-09-04", "food": "Pizza", "sugarLevelAfterTwoHours": 140},
+          {"date": "2023-09-05", "food": "Burger", "sugarLevelAfterTwoHours": 135},
+          {"date": "2023-09-06", "food": "Fruits", "sugarLevelAfterTwoHours": 100},
+          {"date": "2023-09-07", "food": "Veggies", "sugarLevelAfterTwoHours": 90}
+        ]
+      },
+      {
+        "id": "2",
+        "firstName": "Jane",
+        "lastName": "Smith",
+        "dob": "1985-05-15",
+        "profilePic": "C:/CloudComputingFinalProject/mocData/images/profilePic2.jpg",
+        "initialSugarLevel": 85,
+        "logs": [
+          {"date": "2023-09-01", "food": "Sandwich", "sugarLevelAfterTwoHours": 100},
+          {"date": "2023-09-02", "food": "Pasta", "sugarLevelAfterTwoHours": 115},
+          {"date": "2023-09-03", "food": "Salad", "sugarLevelAfterTwoHours": 93},
+          {"date": "2023-09-04", "food": "Pizza", "sugarLevelAfterTwoHours": 138},
+          {"date": "2023-09-05", "food": "Burger", "sugarLevelAfterTwoHours": 133},
+          {"date": "2023-09-06", "food": "Fruits", "sugarLevelAfterTwoHours": 105},
+          {"date": "2023-09-07", "food": "Veggies", "sugarLevelAfterTwoHours": 88},
+          {"date": "2023-09-08", "food": "Steak", "sugarLevelAfterTwoHours": 125}
+        ]
+      }
+    ]
+  }
+  

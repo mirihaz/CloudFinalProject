@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - GlucoMonitor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image: url('C:/CloudComputingFinalProject/public/images/health-bg.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            margin: 10px 0;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+    <script>
+        function toggleSSNBox() {
+            var ssnBox = document.getElementById("ssnBox");
+            if (ssnBox.style.display === "none" || ssnBox.style.display === "") {
+                ssnBox.style.display = "block";
+            } else {
+                ssnBox.style.display = "none";
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Welcome to GlucoMonitor</h2>
+        <p>Select a login method:</p>
+        <button onclick="location.href='/existing_user'">Log in with an existing user</button>
+        <button onclick="location.href='/new_user'">Register as a new user</button>
+    </div>
+</body>
+
+
+</html>
